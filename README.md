@@ -1,4 +1,4 @@
-# WC Marketplace Blocks [![Latest Tag](https://img.shields.io/github/tag/wcmarketplace/wcmp-guten-blocks.svg?style=flat&label=Latest%20Tag)](https://github.com/wcmarketplace/wcmp-guten-blocks/releases)
+# WC Marketplace Blocks [![Latest Tag](https://img.shields.io/github/v/tag/wcmarketplace/wcmp-guten-blocks.svg?label=Latest%20Tag&sort=semver&style=flat)](https://github.com/wcmarketplace/wcmp-guten-blocks/releases)
 
 [![Made with PHP](https://img.shields.io/badge/Made%20with-PHP-blue.svg?style=for-the-badge)](https://wc-marketplace.com)
 
@@ -28,6 +28,8 @@ We soon release a new version of WC Marketplace Blocks onto WordPress.org every 
 ## Installing as WCMp package
 
 1. Get a copy of this plugin using the green "Clone or download" button on the right.
+
 2. Place the plugin folder within "WCMp plugin" `packages` folder.
 3. Load "WCMp Block" plugin module in `$packages` variable of `Package.php`
+
 4. Set `add_filter( "wcmp_load_package_{$package_dir}", '__return_true' )`. And for "WCMp Blocks" `$package_dir` should be `wcmp-guten-blocks/wcmp-blocks.php` unless folder renamed.
