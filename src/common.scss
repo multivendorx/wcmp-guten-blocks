@@ -1,0 +1,19 @@
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+
+// Colors.
+$black: rgb(41, 41, 41);
+$white: #f4f4f4;
+$gray: #dedede;
+$green: #bada55;
+$orange: #fe6778;
+
+.wcmp-block-wrapper{ margin-bottom: 30px;}
+.wcmp-block__selection  {
+    width: 100%;
+    padding-top: 10px;
+}
