@@ -1,7 +1,6 @@
 {
-  "name": "wcmp-blocks-cgb-guten-block",
+  "name": "wcmp-blocks",
   "version": "1.0.0",
-  "private": true,
   "scripts": {
     "start": "cgb-scripts start",
     "build": "cgb-scripts build",
