@@ -1,5 +1,5 @@
-export const NAMESPACE = 'wcmp';
-export const WCMPICONCOLOR = '#e83746';
+export const NAMESPACE = 'mvx';
+export const MVXICONCOLOR = '#e83746';
 export const MAX_COLUMNS = 5;
 export const MIN_COLUMNS = 1;
 export const DEFAULT_COLUMNS =  3;

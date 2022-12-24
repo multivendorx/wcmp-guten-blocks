@@ -2,7 +2,7 @@
 /**
  * Abstract block class.
  *
- * @package WCMp/Blocks
+ * @package MVX/Blocks
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -17,7 +17,7 @@ abstract class AbstractBlock {
 	 *
 	 * @var string
 	 */
-	protected $namespace = 'wcmp';
+	protected $namespace = 'mvx';
 
 	/**
 	 * Attributes.
@@ -55,9 +55,9 @@ abstract class AbstractBlock {
 			$this->namespace . '/' . $this->block_name,
 			array(
 				'render_callback' => array( $this, 'render' ),
-				'editor_script'   => 'wcmp_blocks-scripts-js',
-				'editor_style'    => 'wcmp_blocks-editor-css',
-				'style'           => 'wcmp_blocks-style-css',
+				'editor_script'   => 'mvx_blocks-scripts-js',
+				'editor_style'    => 'mvx_blocks-editor-css',
+				'style'           => 'mvx_blocks-style-css',
 				'attributes'      => $this->get_attributes(),
 			)
 		);

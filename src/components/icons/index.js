@@ -4,10 +4,10 @@
 import { Component, createElement } from '@wordpress/element';
 import { Icon } from '@wordpress/components';
 
-export default class WCMpIcon extends Component {
+export default class MVXIcon extends Component {
 	render() {
 		const { icon, size = 20, className, } = this.props;
-		let path, wcmpIcon;
+		let path, mvxIcon;
 
 		switch ( icon ) {
             case 'top-vendor':
@@ -25,7 +25,7 @@ export default class WCMpIcon extends Component {
             return null;
         }
 
-        const iconClass = [ 'wcmp-icon', 'wcmp-icon-' + icon, className ]
+        const iconClass = [ 'mvx-icon', 'mvx-icon-' + icon, className ]
             .filter( Boolean )
             .join( ' ' );
         const viewbox = '0 0 '+ size + ' ' + size;

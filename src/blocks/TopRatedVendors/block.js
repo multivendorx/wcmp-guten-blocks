@@ -4,8 +4,8 @@
  */
 
 //  Import CSS.
-import './editor.scss';
-import './style.scss';
+/*import './editor.scss';
+import './style.scss';*/
 
 /**
  * External dependencies
@@ -22,10 +22,10 @@ import {
 	ToggleControl,
 } from '@wordpress/components';
 
-// load WCMp Components
+// load MVX Components
 import { 
 	NAMESPACE,
-	WCMPICONCOLOR,
+	MVXICONCOLOR,
 	DEFAULT_COLUMNS,
 	MIN_COLUMNS,
 	MAX_COLUMNS,
@@ -33,7 +33,7 @@ import {
 	MIN_ROWS,
 	MAX_ROWS, 
 } from '../../utils/constants';
-import WCMpIcon from '../../components/icons';
+import MVXIcon from '../../components/icons';
 
 /**
  * Register: aa Gutenberg Block.
@@ -52,21 +52,21 @@ import WCMpIcon from '../../components/icons';
 const BLOCK_NAME = 'top-rated-vendors';
 
 registerBlockType( NAMESPACE+'/'+BLOCK_NAME, { 
-	title: __( 'Top Rated Vendors', 'wcmp-blocks' ), 
+	title: __( 'Top Rated Vendors', 'mvx-blocks' ), 
 	icon: {
-		src: <WCMpIcon icon="top-vendor"/>, 
-		foreground: WCMPICONCOLOR,
+		src: <MVXIcon icon="top-vendor"/>, 
+		foreground: MVXICONCOLOR,
 	}, 
-	category: 'wcmp', 
+	category: 'mvx', 
         description: __(
 		'Display marketplace top rated vendors.',
-		'wcmp-blocks'
+		'mvx-blocks'
 	),
 	keywords: [
-		__( 'Top rated vendors', 'wcmp-blocks' ),
-		__( 'WCMp Vendors', 'wcmp-blocks' ),
-		__( 'Rating vendors', 'wcmp-blocks' ),
-		__( 'Vendors', 'wcmp-blocks' ),
+		__( 'Top rated vendors', 'mvx-blocks' ),
+		__( 'MVX Vendors', 'mvx-blocks' ),
+		__( 'Rating vendors', 'mvx-blocks' ),
+		__( 'Vendors', 'mvx-blocks' ),
 	],
 	attributes: {
 		block_title: {
@@ -119,13 +119,13 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 			<Fragment>
 				<InspectorControls key="inspector">
 					<PanelBody
-						title={ __( 'Layout', 'wcmp-blocks' ) }
+						title={ __( 'Layout', 'mvx-blocks' ) }
 						initialOpen = { true }
 					>
 						{/* <RangeControl
 							label={ __(
 								'Columns',
-								'wcmp-blocks'
+								'mvx-blocks'
 							) }
 							value={ block_columns }
 							onChange={ ( value ) =>
@@ -137,7 +137,7 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 						<RangeControl
 							label={ __(
 								'Rows',
-								'wcmp-blocks'
+								'mvx-blocks'
 							) }
 							value={ block_rows }
 							onChange={ ( value ) =>
@@ -148,23 +148,23 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 						/>
 					</PanelBody>
 					<PanelBody
-						title={ __( 'Content', 'wcmp-blocks' ) }
+						title={ __( 'Content', 'mvx-blocks' ) }
 						initialOpen = { false }
 					>
 						<ToggleControl
 							label={ __(
 								'Vendor Banner',
-								'wcmp-blocks'
+								'mvx-blocks'
 							) }
 							help={
 								contentVisibility.banner
 									? __(
 											'Vendor banner is visible.',
-											'wcmp-blocks'
+											'mvx-blocks'
 									)
 									: __(
 											'Vendor banner is hidden.',
-											'wcmp-blocks'
+											'mvx-blocks'
 									)
 							}
 							checked={ contentVisibility.banner }
@@ -175,17 +175,17 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 						<ToggleControl
 							label={ __(
 								'Vendor Logo',
-								'wcmp-blocks'
+								'mvx-blocks'
 							) }
 							help={
 								contentVisibility.logo
 									? __(
 											'Vendor logo is visible.',
-											'wcmp-blocks'
+											'mvx-blocks'
 									)
 									: __(
 											'Vendor logo is hidden.',
-											'wcmp-blocks'
+											'mvx-blocks'
 									)
 							}
 							checked={ contentVisibility.logo }
@@ -196,17 +196,17 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 						<ToggleControl
 							label={ __(
 								'Vendor Rating',
-								'wcmp-blocks'
+								'mvx-blocks'
 							) }
 							help={
 								contentVisibility.rating
 									? __(
 											'Vendor rating is visible.',
-											'wcmp-blocks'
+											'mvx-blocks'
 									)
 									: __(
 											'Vendor rating is hidden.',
-											'wcmp-blocks'
+											'mvx-blocks'
 									)
 							}
 							checked={ contentVisibility.rating }
@@ -217,17 +217,17 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 						<ToggleControl
 							label={ __(
 								'Vendor Title',
-								'wcmp-blocks'
+								'mvx-blocks'
 							) }
 							help={
 								contentVisibility.banner
 									? __(
 											'Vendor title is visible.',
-											'wcmp-blocks'
+											'mvx-blocks'
 									)
 									: __(
 											'Vendor title is hidden.',
-											'wcmp-blocks'
+											'mvx-blocks'
 									)
 							}
 							checked={ contentVisibility.title }
@@ -238,17 +238,17 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 						<ToggleControl
 							label={ __(
 								'Vendor Social link',
-								'wcmp-blocks'
+								'mvx-blocks'
 							) }
 							help={
 								contentVisibility.social_link
 									? __(
 											'Vendor social link is visible.',
-											'wcmp-blocks'
+											'mvx-blocks'
 									)
 									: __(
 											'Vendor social link is hidden.',
-											'wcmp-blocks'
+											'mvx-blocks'
 									)
 							}
 							checked={ contentVisibility.social_link }
@@ -259,17 +259,17 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 					</PanelBody>
 				</InspectorControls>
 				<Placeholder 
-					icon= { <WCMpIcon icon="top-vendor" size="24" />}
-					label={ __( 'Top Rated Vendors', 'wcmp-blocks' ) }
-					className="wcmp-block wcmp-block-top-rated-vendors"
+					icon= { <MVXIcon icon="top-vendor" size="24" />}
+					label={ __( 'Top Rated Vendors', 'mvx-blocks' ) }
+					className="mvx-block mvx-block-top-rated-vendors"
 				>
 					{ __(
 						'Display top rated vendors in a grid.',
-						'wcmp-blocks'
+						'mvx-blocks'
 					) }
-					<div className="wcmp-block__selection wcmp-block-top-rated-vendors__selection">
+					<div className="mvx-block__selection mvx-block-top-rated-vendors__selection">
 						<TextControl
-							placeholder={ __( 'Add some title', 'wcmp-blocks' ) }
+							placeholder={ __( 'Add some title', 'mvx-blocks' ) }
 							value={ block_title }
 							onChange={ ( value ) => {
 								setAttributes( { block_title: value } );

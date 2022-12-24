@@ -2,7 +2,7 @@
 /**
  * Vendor Top Products block.
  *
- * @package WCMp/Blocks
+ * @package MVX/Blocks
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -13,7 +13,7 @@ use Automattic\WooCommerce\Blocks\Utils\BlocksWpQuery;
  * VendorTopProducts class.
  */
 class VendorTopProducts extends AbstractBlock {
-
+	
 	/**
 	 * Block name.
 	 *
@@ -53,10 +53,10 @@ class VendorTopProducts extends AbstractBlock {
 	 * @return string Rendered block type output.
 	 */
 	public function render( $attributes = array(), $content = '' ) {
-		global $WCMp;
+		global $MVX;
 		$vendor_id = ( $attributes['vendor_id'] ) ? absint( $attributes['vendor_id'] ) : false;
 		if( !$vendor_id ) return '';
-		$this->vendor     = get_wcmp_vendor( $vendor_id );
+		$this->vendor     = get_mvx_vendor( $vendor_id );
 		$this->attributes = $attributes;
 		$this->content    = $content;
 		$this->query_args = $this->parse_query_args();
@@ -103,10 +103,10 @@ class VendorTopProducts extends AbstractBlock {
 	 * @param array $query_args Query args.
 	 */
 	protected function set_vendor_query_args( &$query_args ) {
-		global $WCMp;
+		global $MVX;
 		if ( ! empty( $this->attributes['vendor_id'] ) ) {
 			$query_args['tax_query'][] = array(
-				'taxonomy' => $WCMp->taxonomy->taxonomy_name,
+				'taxonomy' => $MVX->taxonomy->taxonomy_name,
 				'field' => 'term_id',
 				'terms' => absint($this->vendor->term_id)
 			);
@@ -176,7 +176,7 @@ class VendorTopProducts extends AbstractBlock {
 	 */
 	protected function get_container_classes() {
 		$classes = array(
-			'wcmp-block-wrapper',
+			'mvx-block-wrapper',
 			'wc-block-grid',
 			"wp-block-{$this->block_name}",
 			"wc-block-{$this->block_name}",

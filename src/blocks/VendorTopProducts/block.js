@@ -23,10 +23,10 @@ import {
 	ToggleControl,
 } from '@wordpress/components';
 
-// load WCMp Components
+// load MVX Components
 import { 
 	NAMESPACE,
-	WCMPICONCOLOR,
+	MVXICONCOLOR,
 	DEFAULT_COLUMNS,
 	MIN_COLUMNS,
 	MAX_COLUMNS,
@@ -34,7 +34,7 @@ import {
 	MIN_ROWS,
 	MAX_ROWS, 
 } from '../../utils/constants';
-import WCMpIcon from '../../components/icons';
+import MVXIcon from '../../components/icons';
 
 /**
  * Register: aa Gutenberg Block.
@@ -51,21 +51,21 @@ import WCMpIcon from '../../components/icons';
  */
 
 registerBlockType( NAMESPACE+'/vendor-top-products', {
-	title: __( 'Vendor Top Products', 'wcmp-blocks' ), 
+	title: __( 'Vendor Top Products', 'mvx-blocks' ), 
 	icon: {
-		src: <WCMpIcon icon="products"/>, 
-		foreground: WCMPICONCOLOR,
+		src: <MVXIcon icon="products"/>, 
+		foreground: MVXICONCOLOR,
 	},
-	category: 'wcmp', 
+	category: 'mvx', 
         description: __(
 		'Display top products of a vendor.',
-		'wcmp-blocks'
+		'mvx-blocks'
 	),
 	keywords: [
-		__( 'Top Products', 'wcmp-blocks' ),
-		__( 'WCMp Vendor Products', 'wcmp-blocks' ),
-		__( 'Products', 'wcmp-blocks' ),
-		__( 'Vendor', 'wcmp-blocks' ),
+		__( 'Top Products', 'mvx-blocks' ),
+		__( 'MVX Vendor Products', 'mvx-blocks' ),
+		__( 'Products', 'mvx-blocks' ),
+		__( 'Vendor', 'mvx-blocks' ),
 	],
 	attributes: {
 		vendor_id: {
@@ -113,7 +113,7 @@ registerBlockType( NAMESPACE+'/vendor-top-products', {
 		} = attributes;
 
 		const bindVendorsOptionData = [{ value: '', label: 'Select a Vendor...' }];
-		let vendors = wcmp_blocks_scripts_data_params.allVendors;
+		let vendors = mvx_blocks_scripts_data_params.allVendors;
 		vendors.map( function( vendor_data ){
 			bindVendorsOptionData.push( { value: vendor_data.vendor_id, label: vendor_data.vendor_title } );
 		});
@@ -122,13 +122,13 @@ registerBlockType( NAMESPACE+'/vendor-top-products', {
 			<Fragment>
 				<InspectorControls key="inspector">
 					<PanelBody
-						title={ __( 'Layout', 'wcmp-blocks' ) }
+						title={ __( 'Layout', 'mvx-blocks' ) }
 						initialOpen = { true }
 					>
 						<RangeControl
 							label={ __(
 								'Product Columns',
-								'wcmp-blocks'
+								'mvx-blocks'
 							) }
 							value={ block_columns }
 							onChange={ ( value ) =>
@@ -140,7 +140,7 @@ registerBlockType( NAMESPACE+'/vendor-top-products', {
 						<RangeControl
 							label={ __(
 								'Product Rows',
-								'wcmp-blocks'
+								'mvx-blocks'
 							) }
 							value={ block_rows }
 							onChange={ ( value ) =>
@@ -151,7 +151,7 @@ registerBlockType( NAMESPACE+'/vendor-top-products', {
 						/>
 					</PanelBody>
 					<PanelBody
-						title={ __( 'Content', 'wcmp-blocks' ) }
+						title={ __( 'Content', 'mvx-blocks' ) }
 						initialOpen = { false }
 					>
 						<ToggleControl
@@ -241,15 +241,15 @@ registerBlockType( NAMESPACE+'/vendor-top-products', {
 					</PanelBody>
 				</InspectorControls>
 				<Placeholder 
-					icon= { <WCMpIcon icon="products" size="24" />}
-					label={ __( 'Vendor Top Products', 'wcmp-blocks' ) }
-					className="wcmp-block wcmp-block-vendor-top-products"
+					icon= { <MVXIcon icon="products" size="24" />}
+					label={ __( 'Vendor Top Products', 'mvx-blocks' ) }
+					className="mvx-block mvx-block-vendor-top-products"
 				>
 					{ __(
 						'Display top products of selected vendor in a grid.',
-						'wcmp-blocks'
+						'mvx-blocks'
 					) }
-					<div className="wcmp-block__selection wcmp-block-vendor-top-products__selection">
+					<div className="mvx-block__selection mvx-block-vendor-top-products__selection">
 					<SelectControl
 						value={ vendor_id } 
 						onChange={ ( value ) => {
