@@ -21,6 +21,7 @@ import {
 	SelectControl,
 	TextControl,
 	ToggleControl,
+	TextareaControl,
 } from '@wordpress/components';
 
 // load MVX Components
@@ -50,15 +51,15 @@ import MVXIcon from '../../components/icons';
  *                             registered; otherwise `undefined`.
  */
 
-registerBlockType( NAMESPACE+'/vendor-top-products', {
-	title: __( 'Vendor Top Products', 'multivendorx' ), 
+registerBlockType( NAMESPACE+'/vendors-quick-info', {
+	title: __( 'MVX: Contact Vendor', 'multivendorx' ), 
 	icon: {
-		src: <MVXIcon icon="products"/>, 
+		src: <MVXIcon icon="contact-vendor"/>, 
 		foreground: MVXICONCOLOR,
 	},
 	category: 'mvx', 
         description: __(
-		'Display top products of a vendor.',
+		'Adds a contact form on vendor\'s shop page so that customers can contact vendor directly( Admin will also get a copy of the same )',
 		'multivendorx'
 	),
 	keywords: [
@@ -68,6 +69,34 @@ registerBlockType( NAMESPACE+'/vendor-top-products', {
 		__( 'Vendor', 'multivendorx' ),
 	],
 	attributes: {
+		block_title: {
+			type: 'string',
+			default: '',
+		},
+		block_description: {
+			type: 'string',
+			default: '',
+		},
+		block_submit_title: {
+			type: 'string',
+			default: '',
+		},
+		recapta_id: {
+			type: 'string',
+			default: '',
+		},
+		recapta_script_v: {
+			type: 'string',
+			default: '',
+		},
+		site_key_v: {
+			type: 'string',
+			default: '',
+		},
+		secret_key_v: {
+			type: 'string',
+			default: '',
+		},
 		vendor_id: {
 			type: 'string',
 			default: '',
@@ -83,9 +112,7 @@ registerBlockType( NAMESPACE+'/vendor-top-products', {
 		contentVisibility: {
 			type: 'object',
 			default: {
-				title: true,
-				price: true,
-				rating: true,
+				form: true,
 				button: true,
 			},
 		},
@@ -106,16 +133,29 @@ registerBlockType( NAMESPACE+'/vendor-top-products', {
 	edit: ( props ) => {
 		const { attributes, setAttributes } = props;
 		const {
-			vendor_id,			
+			block_title,
+			block_description,
+			block_submit_title,
+			recapta_id,
+			recapta_script_v,
+			site_key_v,
+			secret_key_v,
+			vendor_id,
 			block_columns,
 			block_rows,
 			contentVisibility,
 		} = attributes;
 
-		const bindVendorsOptionData = [{ value: '', label: 'Select a Vendor...' }];
+		const bindVendorsOptionData = [{ value: '', label: 'Select a type...' }];
 		let vendors = mvx_blocks_scripts_data_params.allVendors;
 		vendors.map( function( vendor_data ){
 			bindVendorsOptionData.push( { value: vendor_data.vendor_id, label: vendor_data.vendor_title } );
+		});
+
+		const captaOptionData = [{ value: '', label: 'Select a type...' }];
+		let capta = mvx_blocks_scripts_data_params.recapta;
+		capta.map( function( vendor_data ) {
+			captaOptionData.push( { value: vendor_data.key, label: vendor_data.title } );
 		});
 
 		return (
@@ -156,80 +196,38 @@ registerBlockType( NAMESPACE+'/vendor-top-products', {
 					>
 						<ToggleControl
 							label={ __(
-								'Product title',
+								'Hide from guests: ',
 								'woocommerce'
 							) }
 							help={
-								contentVisibility.title
+								contentVisibility.form
 									? __(
-											'Product title is visible.',
+											'Form is visible.',
 											'woocommerce'
 									)
 									: __(
-											'Product title is hidden.',
+											'Form is hidden.',
 											'woocommerce'
 									)
 							}
-							checked={ contentVisibility.title }
+							checked={ contentVisibility.form }
 							onChange={ ( value ) =>
-								setAttributes( { contentVisibility: { ...contentVisibility, title: value } } )
+								setAttributes( { contentVisibility: { ...contentVisibility, form: value } } )
 							}
 						/>
 						<ToggleControl
 							label={ __(
-								'Product price',
-								'woocommerce'
-							) }
-							help={
-								contentVisibility.price
-									? __(
-											'Product price is visible.',
-											'woocommerce'
-									)
-									: __(
-											'Product price is hidden.',
-											'woocommerce'
-									)
-							}
-							checked={ contentVisibility.price }
-							onChange={ ( value ) =>
-								setAttributes( { contentVisibility: { ...contentVisibility, price: value } } )
-							}
-						/>
-						<ToggleControl
-							label={ __(
-								'Product rating',
-								'woocommerce'
-							) }
-							help={
-								contentVisibility.rating
-									? __(
-											'Product rating is visible.',
-											'woocommerce'
-									)
-									: __(
-											'Product rating is hidden.',
-											'woocommerce'
-									)
-							}
-							checked={ contentVisibility.rating }
-							onChange={ ( value ) =>
-								setAttributes( { contentVisibility: { ...contentVisibility, rating: value } } )
-							}
-						/>
-						<ToggleControl
-							label={ __(
-								'Add to Cart button',
+								'Enable Google Recaptcha',
 								'woocommerce'
 							) }
 							help={
 								contentVisibility.button
 									? __(
-											'Add to Cart button is visible.',
+											'Google recapta is visible.',
 											'woocommerce'
 									)
 									: __(
-											'Add to Cart button is hidden.',
+											'Google recapta is hidden.',
 											'woocommerce'
 									)
 							}
@@ -241,15 +239,106 @@ registerBlockType( NAMESPACE+'/vendor-top-products', {
 					</PanelBody>
 				</InspectorControls>
 				<Placeholder 
-					icon= { <MVXIcon icon="products" size="24" />}
-					label={ __( 'Vendor Top Products', 'multivendorx' ) }
-					className="mvx-block mvx-block-vendor-top-products"
+					icon= { <MVXIcon icon="contact-vendor" size="24" />}
+					label={ __( 'Contact Vendor', 'multivendorx' ) }
+					className="mvx-block mvx-block-contact-vendor"
 				>
 					{ __(
-						'Display top products of selected vendor in a grid.',
+						'Title.',
 						'multivendorx'
 					) }
-					<div className="mvx-block__selection mvx-block-vendor-top-products__selection">
+					<div className="mvx-block__selection mvx-block-contact-vendor__selection">
+					<TextControl
+						placeholder={ __( 'Title:', 'multivendorx' ) }
+						value={ block_title }
+						onChange={ ( value ) => {
+							setAttributes( { block_title: value } );
+						} }
+					/>
+					</div>
+					{ __(
+						'Description',
+						'multivendorx'
+					) }
+					<div className="mvx-block__selection mvx-block-contact-vendor__selection">
+					<TextControl
+						placeholder={ __( 'Description:', 'multivendorx' ) }
+						value={ block_description }
+						onChange={ ( value ) => {
+							setAttributes( { block_description: value } );
+						} }
+					/>
+					</div>
+					{ __(
+						'Submit button text',
+						'multivendorx'
+					) }
+					<div className="mvx-block__selection mvx-block-contact-vendor__selection">
+					<TextControl
+						placeholder={ __( 'Submit Button Label Text:', 'multivendorx' ) }
+						value={ block_submit_title }
+						onChange={ ( value ) => {
+							setAttributes( { block_submit_title: value } );
+						} }
+					/>
+					</div>
+					{ __(
+						'Recapta Type',
+						'multivendorx'
+					) }
+					<div className="mvx-block__selection mvx-block-contact-vendor__selection">
+					<SelectControl
+						value={ recapta_id } 
+						onChange={ ( value ) => {
+							setAttributes( { recapta_id: value } );
+						} }
+						options={ captaOptionData }
+					/>
+					</div>
+					{ __(
+						'Recapta Script',
+						'multivendorx'
+					) }
+					<div className="mvx-block__selection mvx-block-contact-vendor__selection">
+					<TextareaControl
+						placeholder={ __( 'Recaptcha Script:', 'multivendorx' ) }
+						value={ recapta_script_v }
+						onChange={ ( value ) => {
+							setAttributes( { recapta_script_v: value } );
+						} }
+					/>
+					</div>
+					{ __(
+						'Site Key',
+						'multivendorx'
+					) }
+					<div className="mvx-block__selection mvx-block-contact-vendor__selection">
+					<TextControl
+						placeholder={ __( 'Site key:', 'multivendorx' ) }
+						value={ site_key_v }
+						onChange={ ( value ) => {
+							setAttributes( { site_key_v: value } );
+						} }
+					/>
+					</div>
+					{ __(
+						'Secret Key',
+						'multivendorx'
+					) }
+					<div className="mvx-block__selection mvx-block-contact-vendor__selection">
+					<TextControl
+						placeholder={ __( 'Secret key:', 'multivendorx' ) }
+						value={ secret_key_v }
+						onChange={ ( value ) => {
+							setAttributes( { secret_key_v: value } );
+						} }
+					/>
+					</div>
+					{ __(
+						'Select Vendor',
+						'multivendorx'
+					) }
+					<div className="mvx-block__selection mvx-block-contact-vendor__selection">
 					<SelectControl
 						value={ vendor_id } 
 						onChange={ ( value ) => {

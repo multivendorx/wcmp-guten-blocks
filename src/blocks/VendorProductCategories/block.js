@@ -1,5 +1,5 @@
 /**
- * BLOCK: VendorsQuickInfo
+ * BLOCK: TopRatedVendors
  *
  */
 
@@ -50,32 +50,35 @@ import MVXIcon from '../../components/icons';
  *                             registered; otherwise `undefined`.
  */
 
-const BLOCK_NAME = 'coupon-vendors';
-
-registerBlockType( NAMESPACE+'/'+BLOCK_NAME, { 
-	title: __( 'MVX: Vendor\'s Coupons', 'multivendorx' ), 
+registerBlockType( NAMESPACE+'/vendor-products-catagory', {
+	title: __( 'MVX: Vendor\'s Product Categories', 'multivendorx' ), 
 	icon: {
-		src: <MVXIcon icon="coupon"/>, 
+		src: <MVXIcon icon="product-categories"/>, 
 		foreground: MVXICONCOLOR,
-	}, 
+	},
 	category: 'mvx', 
         description: __(
-		'Displays coupons added by the vendor on the vendor shop page.',
+		'Displays a list of product categories added by the vendor on the vendor shop page.',
 		'multivendorx'
 	),
 	keywords: [
-		__( 'Coupon Vendor', 'multivendorx' ),
-		__( 'MVX Vendors', 'multivendorx' ),
-		__( 'Vendors', 'multivendorx' ),
+		__( 'Top Products', 'multivendorx' ),
+		__( 'MVX Vendor categories', 'multivendorx' ),
+		__( 'Products', 'multivendorx' ),
+		__( 'Vendor', 'multivendorx' ),
 	],
 	attributes: {
-		block_title: {
-			type: 'string',
-			default: ''
-		},
 		vendor_id: {
 			type: 'string',
-			default: ''
+			default: '',
+		},
+		block_title: {
+			type: 'string',
+			default: '',
+		},
+		block_columns: {
+			type: 'number',
+			default: DEFAULT_COLUMNS
 		},
 		block_rows: {
 			type: 'number',
@@ -84,6 +87,8 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 		contentVisibility: {
 			type: 'object',
 			default: {
+				count: true,
+				hierarchical: true,
 			},
 		},
 	},
@@ -103,11 +108,11 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 	edit: ( props ) => {
 		const { attributes, setAttributes } = props;
 		const {
-			block_title,
+			vendor_id,
+			block_title,		
+			block_columns,
 			block_rows,
 			contentVisibility,
-			preview,
-			vendor_id
 		} = attributes;
 
 		const bindVendorsOptionData = [{ value: '', label: 'Select a Vendor...' }];
@@ -125,7 +130,19 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 					>
 						<RangeControl
 							label={ __(
-								'Rows',
+								'Product Columns',
+								'multivendorx'
+							) }
+							value={ block_columns }
+							onChange={ ( value ) =>
+								setAttributes( { block_columns: value } )
+							}
+							min={ MIN_COLUMNS }
+							max={ MAX_COLUMNS }
+						/>
+						<RangeControl
+							label={ __(
+								'Product Rows',
 								'multivendorx'
 							) }
 							value={ block_rows }
@@ -136,30 +153,77 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 							max={ MAX_ROWS }
 						/>
 					</PanelBody>
+					<PanelBody
+						title={ __( 'Content', 'multivendorx' ) }
+						initialOpen = { false }
+					>
+						<ToggleControl
+							label={ __(
+								'Show product counts',
+								'woocommerce'
+							) }
+							help={
+								contentVisibility.count
+									? __(
+											'Product count is visible.',
+											'woocommerce'
+									)
+									: __(
+											'Product count is hidden.',
+											'woocommerce'
+									)
+							}
+							checked={ contentVisibility.count }
+							onChange={ ( value ) =>
+								setAttributes( { contentVisibility: { ...contentVisibility, count: value } } )
+							}
+						/>
+						<ToggleControl
+							label={ __(
+								'Show hierarchy',
+								'woocommerce'
+							) }
+							help={
+								contentVisibility.hierarchical
+									? __(
+											'Hierarchy is visible.',
+											'woocommerce'
+									)
+									: __(
+											'Hierarchy is hidden.',
+											'woocommerce'
+									)
+							}
+							checked={ contentVisibility.hierarchical }
+							onChange={ ( value ) =>
+								setAttributes( { contentVisibility: { ...contentVisibility, hierarchical: value } } )
+							}
+						/>
+					</PanelBody>
 				</InspectorControls>
 				<Placeholder 
-					icon= { <MVXIcon icon="coupon" size="24" />}
-					label={ __( 'Vendor Coupons', 'multivendorx' ) }
-					className="mvx-block mvx-block-coupon-vendors"
+					icon= { <MVXIcon icon="product-categories" size="24" />}
+					label={ __( 'Vendor Product Categories', 'multivendorx' ) }
+					className="mvx-block mvx-block-vendor-products-catagory"
 				>
 					{ __(
-						'Title',
+						'Enter title',
 						'multivendorx'
 					) }
-					<div className="mvx-block__selection mvx-block-coupon-vendors__selection">
-						<TextControl
-							placeholder={ __( 'Add some title', 'multivendorx' ) }
-							value={ block_title }
-							onChange={ ( value ) => {
-								setAttributes( { block_title: value } );
-							} }
-						/>
+					<div className="mvx-block__selection mvx-block-vendor-products-catagory__selection">
+					<TextControl
+						placeholder={ __( 'Add some title', 'multivendorx' ) }
+						value={ block_title }
+						onChange={ ( value ) => {
+							setAttributes( { block_title: value } );
+						} }
+					/>
 					</div>
 					{ __(
-						'Select Vendor',
+						'Enter vendor name',
 						'multivendorx'
 					) }
-					<div className="mvx-block__selection mvx-block-coupon-vendors__selection">
+					<div className="mvx-block__selection mvx-block-vendor-products-catagory__selection">
 					<SelectControl
 						value={ vendor_id } 
 						onChange={ ( value ) => {

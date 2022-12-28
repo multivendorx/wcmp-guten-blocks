@@ -50,21 +50,21 @@ import MVXIcon from '../../components/icons';
  *                             registered; otherwise `undefined`.
  */
 
-const BLOCK_NAME = 'coupon-vendors';
+const BLOCK_NAME = 'location-vendors';
 
 registerBlockType( NAMESPACE+'/'+BLOCK_NAME, { 
-	title: __( 'MVX: Vendor\'s Coupons', 'multivendorx' ), 
+	title: __( 'MVX: Vendor\'s Location', 'multivendorx' ), 
 	icon: {
-		src: <MVXIcon icon="coupon"/>, 
+		src: <MVXIcon icon="location"/>, 
 		foreground: MVXICONCOLOR,
 	}, 
 	category: 'mvx', 
         description: __(
-		'Displays coupons added by the vendor on the vendor shop page.',
+		'Display the vendor\'s store location on Google Maps.',
 		'multivendorx'
 	),
 	keywords: [
-		__( 'Coupon Vendor', 'multivendorx' ),
+		__( 'Location Vendor', 'multivendorx' ),
 		__( 'MVX Vendors', 'multivendorx' ),
 		__( 'Vendors', 'multivendorx' ),
 	],
@@ -138,15 +138,15 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 					</PanelBody>
 				</InspectorControls>
 				<Placeholder 
-					icon= { <MVXIcon icon="coupon" size="24" />}
-					label={ __( 'Vendor Coupons', 'multivendorx' ) }
-					className="mvx-block mvx-block-coupon-vendors"
+					icon= { <MVXIcon icon="location" size="24" />}
+					label={ __( 'Location Vendor', 'multivendorx' ) }
+					className="mvx-block mvx-block-location-vendors"
 				>
 					{ __(
 						'Title',
 						'multivendorx'
 					) }
-					<div className="mvx-block__selection mvx-block-coupon-vendors__selection">
+					<div className="mvx-block__selection mvx-block-location-vendors__selection">
 						<TextControl
 							placeholder={ __( 'Add some title', 'multivendorx' ) }
 							value={ block_title }
@@ -159,14 +159,14 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 						'Select Vendor',
 						'multivendorx'
 					) }
-					<div className="mvx-block__selection mvx-block-coupon-vendors__selection">
-					<SelectControl
-						value={ vendor_id } 
-						onChange={ ( value ) => {
-							setAttributes( { vendor_id: value } );
-						} }
-						options={ bindVendorsOptionData }
-					/>
+					<div className="mvx-block__selection mvx-block-location-vendors__selection">
+						<SelectControl
+							value={ vendor_id } 
+							onChange={ ( value ) => {
+								setAttributes( { vendor_id: value } );
+							} }
+							options={ bindVendorsOptionData }
+						/>
 					</div>
 				</Placeholder>
 			</Fragment>

@@ -12,7 +12,7 @@ import './style.scss';*/
  */
 const { __ } = wp.i18n; 
 const { registerBlockType } = wp.blocks; 
-import { InspectorControls } from '@wordpress/editor';
+import { InspectorControls, PlainText } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 import {
 	PanelBody,
@@ -52,7 +52,7 @@ import MVXIcon from '../../components/icons';
 const BLOCK_NAME = 'top-rated-vendors';
 
 registerBlockType( NAMESPACE+'/'+BLOCK_NAME, { 
-	title: __( 'Top Rated Vendors', 'mvx-blocks' ), 
+	title: __( 'Top Rated Vendors', 'multivendorx' ), 
 	icon: {
 		src: <MVXIcon icon="top-vendor"/>, 
 		foreground: MVXICONCOLOR,
@@ -60,13 +60,13 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 	category: 'mvx', 
         description: __(
 		'Display marketplace top rated vendors.',
-		'mvx-blocks'
+		'multivendorx'
 	),
 	keywords: [
-		__( 'Top rated vendors', 'mvx-blocks' ),
-		__( 'MVX Vendors', 'mvx-blocks' ),
-		__( 'Rating vendors', 'mvx-blocks' ),
-		__( 'Vendors', 'mvx-blocks' ),
+		__( 'Top rated vendors', 'multivendorx' ),
+		__( 'MVX Vendors', 'multivendorx' ),
+		__( 'Rating vendors', 'multivendorx' ),
+		__( 'Vendors', 'multivendorx' ),
 	],
 	attributes: {
 		block_title: {
@@ -119,13 +119,13 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 			<Fragment>
 				<InspectorControls key="inspector">
 					<PanelBody
-						title={ __( 'Layout', 'mvx-blocks' ) }
+						title={ __( 'Layout', 'multivendorx' ) }
 						initialOpen = { true }
 					>
 						{/* <RangeControl
 							label={ __(
 								'Columns',
-								'mvx-blocks'
+								'multivendorx'
 							) }
 							value={ block_columns }
 							onChange={ ( value ) =>
@@ -137,7 +137,7 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 						<RangeControl
 							label={ __(
 								'Rows',
-								'mvx-blocks'
+								'multivendorx'
 							) }
 							value={ block_rows }
 							onChange={ ( value ) =>
@@ -148,23 +148,23 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 						/>
 					</PanelBody>
 					<PanelBody
-						title={ __( 'Content', 'mvx-blocks' ) }
+						title={ __( 'Content', 'multivendorx' ) }
 						initialOpen = { false }
 					>
 						<ToggleControl
 							label={ __(
 								'Vendor Banner',
-								'mvx-blocks'
+								'multivendorx'
 							) }
 							help={
 								contentVisibility.banner
 									? __(
 											'Vendor banner is visible.',
-											'mvx-blocks'
+											'multivendorx'
 									)
 									: __(
 											'Vendor banner is hidden.',
-											'mvx-blocks'
+											'multivendorx'
 									)
 							}
 							checked={ contentVisibility.banner }
@@ -175,17 +175,17 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 						<ToggleControl
 							label={ __(
 								'Vendor Logo',
-								'mvx-blocks'
+								'multivendorx'
 							) }
 							help={
 								contentVisibility.logo
 									? __(
 											'Vendor logo is visible.',
-											'mvx-blocks'
+											'multivendorx'
 									)
 									: __(
 											'Vendor logo is hidden.',
-											'mvx-blocks'
+											'multivendorx'
 									)
 							}
 							checked={ contentVisibility.logo }
@@ -196,17 +196,17 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 						<ToggleControl
 							label={ __(
 								'Vendor Rating',
-								'mvx-blocks'
+								'multivendorx'
 							) }
 							help={
 								contentVisibility.rating
 									? __(
 											'Vendor rating is visible.',
-											'mvx-blocks'
+											'multivendorx'
 									)
 									: __(
 											'Vendor rating is hidden.',
-											'mvx-blocks'
+											'multivendorx'
 									)
 							}
 							checked={ contentVisibility.rating }
@@ -217,17 +217,17 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 						<ToggleControl
 							label={ __(
 								'Vendor Title',
-								'mvx-blocks'
+								'multivendorx'
 							) }
 							help={
 								contentVisibility.banner
 									? __(
 											'Vendor title is visible.',
-											'mvx-blocks'
+											'multivendorx'
 									)
 									: __(
 											'Vendor title is hidden.',
-											'mvx-blocks'
+											'multivendorx'
 									)
 							}
 							checked={ contentVisibility.title }
@@ -238,17 +238,17 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 						<ToggleControl
 							label={ __(
 								'Vendor Social link',
-								'mvx-blocks'
+								'multivendorx'
 							) }
 							help={
 								contentVisibility.social_link
 									? __(
 											'Vendor social link is visible.',
-											'mvx-blocks'
+											'multivendorx'
 									)
 									: __(
 											'Vendor social link is hidden.',
-											'mvx-blocks'
+											'multivendorx'
 									)
 							}
 							checked={ contentVisibility.social_link }
@@ -260,16 +260,16 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 				</InspectorControls>
 				<Placeholder 
 					icon= { <MVXIcon icon="top-vendor" size="24" />}
-					label={ __( 'Top Rated Vendors', 'mvx-blocks' ) }
+					label={ __( 'Top Rated Vendors', 'multivendorx' ) }
 					className="mvx-block mvx-block-top-rated-vendors"
 				>
 					{ __(
 						'Display top rated vendors in a grid.',
-						'mvx-blocks'
+						'multivendorx'
 					) }
 					<div className="mvx-block__selection mvx-block-top-rated-vendors__selection">
 						<TextControl
-							placeholder={ __( 'Add some title', 'mvx-blocks' ) }
+							placeholder={ __( 'Add some title', 'multivendorx' ) }
 							value={ block_title }
 							onChange={ ( value ) => {
 								setAttributes( { block_title: value } );

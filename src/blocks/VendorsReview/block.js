@@ -1,5 +1,5 @@
 /**
- * BLOCK: VendorsQuickInfo
+ * BLOCK: TopRatedVendors
  *
  */
 
@@ -50,32 +50,39 @@ import MVXIcon from '../../components/icons';
  *                             registered; otherwise `undefined`.
  */
 
-const BLOCK_NAME = 'coupon-vendors';
-
-registerBlockType( NAMESPACE+'/'+BLOCK_NAME, { 
-	title: __( 'MVX: Vendor\'s Coupons', 'multivendorx' ), 
+registerBlockType( NAMESPACE+'/vendors-review', {
+	title: __( 'MVX: Vendor Review', 'multivendorx' ), 
 	icon: {
-		src: <MVXIcon icon="coupon"/>, 
+		src: <MVXIcon icon="review"/>, 
 		foreground: MVXICONCOLOR,
-	}, 
+	},
 	category: 'mvx', 
         description: __(
-		'Displays coupons added by the vendor on the vendor shop page.',
+		'Add a vendor review widget on vendor\'s shop page and single product page.',
 		'multivendorx'
 	),
 	keywords: [
-		__( 'Coupon Vendor', 'multivendorx' ),
-		__( 'MVX Vendors', 'multivendorx' ),
-		__( 'Vendors', 'multivendorx' ),
+		__( 'Top Products', 'multivendorx' ),
+		__( 'MVX Vendor Products', 'multivendorx' ),
+		__( 'Products', 'multivendorx' ),
+		__( 'Vendor', 'multivendorx' ),
 	],
 	attributes: {
 		block_title: {
 			type: 'string',
-			default: ''
+			default: '',
 		},
 		vendor_id: {
 			type: 'string',
-			default: ''
+			default: '',
+		},
+		review_no: {
+			type: 'string',
+			default: '',
+		},
+		block_columns: {
+			type: 'number',
+			default: DEFAULT_COLUMNS
 		},
 		block_rows: {
 			type: 'number',
@@ -84,6 +91,10 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 		contentVisibility: {
 			type: 'object',
 			default: {
+				title: true,
+				price: true,
+				rating: true,
+				button: true,
 			},
 		},
 	},
@@ -103,11 +114,12 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 	edit: ( props ) => {
 		const { attributes, setAttributes } = props;
 		const {
+			vendor_id,
 			block_title,
+			review_no,			
+			block_columns,
 			block_rows,
 			contentVisibility,
-			preview,
-			vendor_id
 		} = attributes;
 
 		const bindVendorsOptionData = [{ value: '', label: 'Select a Vendor...' }];
@@ -125,7 +137,19 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 					>
 						<RangeControl
 							label={ __(
-								'Rows',
+								'Product Columns',
+								'multivendorx'
+							) }
+							value={ block_columns }
+							onChange={ ( value ) =>
+								setAttributes( { block_columns: value } )
+							}
+							min={ MIN_COLUMNS }
+							max={ MAX_COLUMNS }
+						/>
+						<RangeControl
+							label={ __(
+								'Product Rows',
 								'multivendorx'
 							) }
 							value={ block_rows }
@@ -138,34 +162,49 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 					</PanelBody>
 				</InspectorControls>
 				<Placeholder 
-					icon= { <MVXIcon icon="coupon" size="24" />}
-					label={ __( 'Vendor Coupons', 'multivendorx' ) }
-					className="mvx-block mvx-block-coupon-vendors"
+					icon= { <MVXIcon icon="review" size="24" />}
+					label={ __( 'Vendor Review' , 'multivendorx' ) }
+					className="mvx-block mvx-block-vendors-review"
 				>
 					{ __(
-						'Title',
+						'Enter title',
 						'multivendorx'
 					) }
-					<div className="mvx-block__selection mvx-block-coupon-vendors__selection">
-						<TextControl
-							placeholder={ __( 'Add some title', 'multivendorx' ) }
-							value={ block_title }
-							onChange={ ( value ) => {
-								setAttributes( { block_title: value } );
-							} }
-						/>
+					<div className="mvx-block__selection mvx-block-vendors-review__selection">
+					<TextControl
+						placeholder={ __( 'Add some title', 'multivendorx' ) }
+						value={ block_title }
+						onChange={ ( value ) => {
+							setAttributes( { block_title: value } );
+						} }
+					/>
 					</div>
 					{ __(
-						'Select Vendor',
+						'Enter vendor name',
 						'multivendorx'
 					) }
-					<div className="mvx-block__selection mvx-block-coupon-vendors__selection">
+
+					<div className="mvx-block__selection mvx-block-vendors-review__selection">
 					<SelectControl
 						value={ vendor_id } 
 						onChange={ ( value ) => {
 							setAttributes( { vendor_id: value } );
 						} }
 						options={ bindVendorsOptionData }
+					/>
+					</div>
+					{ __(
+						'Enter number of reviews',
+						'multivendorx'
+					) }
+
+					<div className="mvx-block__selection mvx-block-vendors-review__selection">
+					<TextControl
+						placeholder={ __( 'Number of reviews', 'multivendorx' ) }
+						value={ review_no }
+						onChange={ ( value ) => {
+							setAttributes( { review_no: value } );
+						} }
 					/>
 					</div>
 				</Placeholder>

@@ -50,21 +50,21 @@ import MVXIcon from '../../components/icons';
  *                             registered; otherwise `undefined`.
  */
 
-const BLOCK_NAME = 'coupon-vendors';
+const BLOCK_NAME = 'list-vendors';
 
 registerBlockType( NAMESPACE+'/'+BLOCK_NAME, { 
-	title: __( 'MVX: Vendor\'s Coupons', 'multivendorx' ), 
+	title: __( 'MVX: Vendors List', 'multivendorx' ), 
 	icon: {
-		src: <MVXIcon icon="coupon"/>, 
+		src: <MVXIcon icon="vendor-list"/>, 
 		foreground: MVXICONCOLOR,
 	}, 
 	category: 'mvx', 
         description: __(
-		'Displays coupons added by the vendor on the vendor shop page.',
+		'Display list of registered vendors on your site.',
 		'multivendorx'
 	),
 	keywords: [
-		__( 'Coupon Vendor', 'multivendorx' ),
+		__( 'Vendor list', 'multivendorx' ),
 		__( 'MVX Vendors', 'multivendorx' ),
 		__( 'Vendors', 'multivendorx' ),
 	],
@@ -73,18 +73,9 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 			type: 'string',
 			default: ''
 		},
-		vendor_id: {
-			type: 'string',
-			default: ''
-		},
 		block_rows: {
 			type: 'number',
 			default: DEFAULT_ROWS
-		},
-		contentVisibility: {
-			type: 'object',
-			default: {
-			},
 		},
 	},
 	example: {},
@@ -105,9 +96,7 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 		const {
 			block_title,
 			block_rows,
-			contentVisibility,
 			preview,
-			vendor_id
 		} = attributes;
 
 		const bindVendorsOptionData = [{ value: '', label: 'Select a Vendor...' }];
@@ -138,15 +127,15 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 					</PanelBody>
 				</InspectorControls>
 				<Placeholder 
-					icon= { <MVXIcon icon="coupon" size="24" />}
-					label={ __( 'Vendor Coupons', 'multivendorx' ) }
-					className="mvx-block mvx-block-coupon-vendors"
+					icon= { <MVXIcon icon="vendor-list" size="24" />}
+					label={ __( 'Vendor List', 'multivendorx' ) }
+					className="mvx-block mvx-block-list-vendors"
 				>
 					{ __(
 						'Title',
 						'multivendorx'
 					) }
-					<div className="mvx-block__selection mvx-block-coupon-vendors__selection">
+					<div className="mvx-block__selection mvx-block-list-vendors__selection">
 						<TextControl
 							placeholder={ __( 'Add some title', 'multivendorx' ) }
 							value={ block_title }
@@ -154,19 +143,6 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 								setAttributes( { block_title: value } );
 							} }
 						/>
-					</div>
-					{ __(
-						'Select Vendor',
-						'multivendorx'
-					) }
-					<div className="mvx-block__selection mvx-block-coupon-vendors__selection">
-					<SelectControl
-						value={ vendor_id } 
-						onChange={ ( value ) => {
-							setAttributes( { vendor_id: value } );
-						} }
-						options={ bindVendorsOptionData }
-					/>
 					</div>
 				</Placeholder>
 			</Fragment>

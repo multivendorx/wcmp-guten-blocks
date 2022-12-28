@@ -36,7 +36,7 @@ if ( version_compare( $GLOBALS['wp_version'], $minimum_wp_version, '<' ) ) {
     function mvx_blocks_admin_unsupported_wp_notice() {
                 ?>
                 <div class="notice notice-error is-dismissible">
-                        <p><?php esc_html_e( 'MVX Blocks requires a more recent version of WordPress and has been paused. Please update WordPress to continue enjoying WooCommerce Blocks.', 'mvx-blocks' ); ?></p>
+                        <p><?php esc_html_e( 'MVX Blocks requires a more recent version of WordPress and has been paused. Please update WordPress to continue enjoying WooCommerce Blocks.', 'multivendorx' ); ?></p>
                 </div>
                 <?php
         
@@ -102,7 +102,6 @@ class MVX_Block {
      * @return void
      */
     public function on_plugins_loaded() {
-        $this->load_plugin_textdomain();
         $this->includes();
         
         add_action( 'enqueue_block_editor_assets', array( __CLASS__, 'register_blocks_assets' ) );
@@ -121,7 +120,7 @@ class MVX_Block {
             array(
                 array(
                     'slug' => 'mvx',
-                    'title' => __( 'MultiVendorX', 'mvx-blocks' ),
+                    'title' => __( 'MultiVendorX', 'multivendorx' ),
                     'icon'  => 'wordpress',
                 ),
             )
@@ -163,6 +162,16 @@ class MVX_Block {
             'pluginDirPath' => MVXB_PLUGIN_PATH,
             'pluginDirUrl'  => MVXB_PLUGIN_URL,
             'allVendors'    => mvx_vendor_list_item(),
+            'recapta'       =>  array(
+                array(
+                    'key'   =>  'v2',
+                    'title' =>  __( 'reCAPTCHA v2', 'multivendorx' ),
+                ),
+                array(
+                    'key'   =>  'v3',
+                    'title' =>  __( 'reCAPTCHA v3', 'multivendorx' ),
+                ),
+            )
         ) );
         wp_localize_script( 'mvx_blocks-scripts-js', 'mvx_blocks_scripts_data_params', $params );
     }
@@ -189,8 +198,17 @@ class MVX_Block {
         $blocks = [
             'TopRatedVendors',
             'VendorTopProducts',
-            'VendorsQuickInfo',
-            'VendorCoupons'
+            'VendorsInfo',
+            'VendorCoupons',
+            'VendorLocation',
+            'VendorOnSellProducts',
+            'VendorPolicies',
+            'VendorsReview',
+            'VendorsContact',
+            'VendorRecentProducts',
+            'VendorProductsSearch',
+            'VendorProductCategories',
+            'VendorLists'
         ];
                 
         foreach ( $blocks as $class ) {
@@ -216,13 +234,6 @@ class MVX_Block {
     protected function includes() {
         include_once MVXB_ABSPATH . 'inc/functions.php';
         include_once MVXB_ABSPATH . 'src/blocks/AbstractBlock.php';
-    }
-
-    /**
-     * Load Localisation files.
-     */
-    protected function load_plugin_textdomain() {
-        load_plugin_textdomain( 'mvx-blocks', false, basename( dirname( __FILE__ ) ) . '/languages' );
     }
 }
 MVX_Block::instance()->init();

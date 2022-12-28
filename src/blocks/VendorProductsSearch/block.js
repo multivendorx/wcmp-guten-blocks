@@ -1,5 +1,5 @@
 /**
- * BLOCK: VendorsQuickInfo
+ * BLOCK: TopRatedVendors
  *
  */
 
@@ -50,32 +50,35 @@ import MVXIcon from '../../components/icons';
  *                             registered; otherwise `undefined`.
  */
 
-const BLOCK_NAME = 'coupon-vendors';
-
-registerBlockType( NAMESPACE+'/'+BLOCK_NAME, { 
-	title: __( 'MVX: Vendor\'s Coupons', 'multivendorx' ), 
+registerBlockType( NAMESPACE+'/vendor-search-products', {
+	title: __( 'MVX: Vendor Product Search', 'multivendorx' ), 
 	icon: {
-		src: <MVXIcon icon="coupon"/>, 
+		src: <MVXIcon icon="product-search"/>, 
 		foreground: MVXICONCOLOR,
-	}, 
+	},
 	category: 'mvx', 
         description: __(
-		'Displays coupons added by the vendor on the vendor shop page.',
+		'A search form for vendor store products search.',
 		'multivendorx'
 	),
 	keywords: [
-		__( 'Coupon Vendor', 'multivendorx' ),
-		__( 'MVX Vendors', 'multivendorx' ),
-		__( 'Vendors', 'multivendorx' ),
+		__( 'Top Products', 'multivendorx' ),
+		__( 'MVX Vendor Products', 'multivendorx' ),
+		__( 'Products', 'multivendorx' ),
+		__( 'Vendor', 'multivendorx' ),
 	],
 	attributes: {
 		block_title: {
 			type: 'string',
-			default: ''
+			default: '',
 		},
 		vendor_id: {
 			type: 'string',
-			default: ''
+			default: '',
+		},
+		block_columns: {
+			type: 'number',
+			default: DEFAULT_COLUMNS
 		},
 		block_rows: {
 			type: 'number',
@@ -84,6 +87,10 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 		contentVisibility: {
 			type: 'object',
 			default: {
+				title: true,
+				price: true,
+				rating: true,
+				button: true,
 			},
 		},
 	},
@@ -103,18 +110,12 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 	edit: ( props ) => {
 		const { attributes, setAttributes } = props;
 		const {
-			block_title,
+			vendor_id,
+			block_title,		
+			block_columns,
 			block_rows,
 			contentVisibility,
-			preview,
-			vendor_id
 		} = attributes;
-
-		const bindVendorsOptionData = [{ value: '', label: 'Select a Vendor...' }];
-		let vendors = mvx_blocks_scripts_data_params.allVendors;
-		vendors.map( function( vendor_data ){
-			bindVendorsOptionData.push( { value: vendor_data.vendor_id, label: vendor_data.vendor_title } );
-		});
 
 		return (
 			<Fragment>
@@ -125,7 +126,19 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 					>
 						<RangeControl
 							label={ __(
-								'Rows',
+								'Product Columns',
+								'multivendorx'
+							) }
+							value={ block_columns }
+							onChange={ ( value ) =>
+								setAttributes( { block_columns: value } )
+							}
+							min={ MIN_COLUMNS }
+							max={ MAX_COLUMNS }
+						/>
+						<RangeControl
+							label={ __(
+								'Product Rows',
 								'multivendorx'
 							) }
 							value={ block_rows }
@@ -138,15 +151,15 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 					</PanelBody>
 				</InspectorControls>
 				<Placeholder 
-					icon= { <MVXIcon icon="coupon" size="24" />}
-					label={ __( 'Vendor Coupons', 'multivendorx' ) }
-					className="mvx-block mvx-block-coupon-vendors"
+					icon= { <MVXIcon icon="product-search" size="24" />}
+					label={ __( 'Product search', 'multivendorx' ) }
+					className="mvx-block mvx-block-vendor-search-products"
 				>
 					{ __(
 						'Title',
 						'multivendorx'
 					) }
-					<div className="mvx-block__selection mvx-block-coupon-vendors__selection">
+					<div className="mvx-block__selection mvx-block-vendor-search-products__selection">
 						<TextControl
 							placeholder={ __( 'Add some title', 'multivendorx' ) }
 							value={ block_title }
@@ -154,19 +167,6 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 								setAttributes( { block_title: value } );
 							} }
 						/>
-					</div>
-					{ __(
-						'Select Vendor',
-						'multivendorx'
-					) }
-					<div className="mvx-block__selection mvx-block-coupon-vendors__selection">
-					<SelectControl
-						value={ vendor_id } 
-						onChange={ ( value ) => {
-							setAttributes( { vendor_id: value } );
-						} }
-						options={ bindVendorsOptionData }
-					/>
 					</div>
 				</Placeholder>
 			</Fragment>

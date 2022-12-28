@@ -1,5 +1,5 @@
 /**
- * BLOCK: VendorsQuickInfo
+ * BLOCK: TopRatedVendors
  *
  */
 
@@ -50,29 +50,39 @@ import MVXIcon from '../../components/icons';
  *                             registered; otherwise `undefined`.
  */
 
-const BLOCK_NAME = 'quick-info-vendors';
-
-registerBlockType( NAMESPACE+'/'+BLOCK_NAME, { 
-	title: __( 'Contact Vendor', 'mvx-blocks' ), 
-	icon: <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0V0z" /><path d="M19 13H5v-2h14v2z" /></svg>, 
+registerBlockType( NAMESPACE+'/vendor-recent-products', {
+	title: __( 'MVX: Vendor\'s Recent Products', 'multivendorx' ), 
+	icon: {
+		src: <MVXIcon icon="recent-product"/>, 
+		foreground: MVXICONCOLOR,
+	},
 	category: 'mvx', 
         description: __(
-		'Ddd.',
-		'mvx-blocks'
+		'Displays a list of vendor recent products on the vendor shop page.',
+		'multivendorx'
 	),
 	keywords: [
-		__( 'Contact Vendor', 'mvx-blocks' ),
-		__( 'MVX Vendors', 'mvx-blocks' ),
-		__( 'Vendors', 'mvx-blocks' ),
+		__( 'Top Products', 'multivendorx' ),
+		__( 'MVX Vendor Products', 'multivendorx' ),
+		__( 'Products', 'multivendorx' ),
+		__( 'Vendor', 'multivendorx' ),
 	],
 	attributes: {
-		block_title: {
-			type: 'string',
-			default: ''
-		},
 		vendor_id: {
 			type: 'string',
-			default: ''
+			default: '',
+		},
+		block_title: {
+			type: 'string',
+			default: '',
+		},
+		no_of_product: {
+			type: 'number',
+			default: '',
+		},
+		block_columns: {
+			type: 'number',
+			default: DEFAULT_COLUMNS
 		},
 		block_rows: {
 			type: 'number',
@@ -81,6 +91,10 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 		contentVisibility: {
 			type: 'object',
 			default: {
+				title: true,
+				price: true,
+				rating: true,
+				button: true,
 			},
 		},
 	},
@@ -100,11 +114,12 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 	edit: ( props ) => {
 		const { attributes, setAttributes } = props;
 		const {
+			vendor_id,
 			block_title,
+			no_of_product,		
+			block_columns,
 			block_rows,
 			contentVisibility,
-			preview,
-			vendor_id
 		} = attributes;
 
 		const bindVendorsOptionData = [{ value: '', label: 'Select a Vendor...' }];
@@ -117,13 +132,25 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 			<Fragment>
 				<InspectorControls key="inspector">
 					<PanelBody
-						title={ __( 'Layout', 'mvx-blocks' ) }
+						title={ __( 'Layout', 'multivendorx' ) }
 						initialOpen = { true }
 					>
 						<RangeControl
 							label={ __(
-								'Rows',
-								'mvx-blocks'
+								'Product Columns',
+								'multivendorx'
+							) }
+							value={ block_columns }
+							onChange={ ( value ) =>
+								setAttributes( { block_columns: value } )
+							}
+							min={ MIN_COLUMNS }
+							max={ MAX_COLUMNS }
+						/>
+						<RangeControl
+							label={ __(
+								'Product Rows',
+								'multivendorx'
 							) }
 							value={ block_rows }
 							onChange={ ( value ) =>
@@ -135,29 +162,48 @@ registerBlockType( NAMESPACE+'/'+BLOCK_NAME, {
 					</PanelBody>
 				</InspectorControls>
 				<Placeholder 
-					icon= { <MVXIcon icon="top-vendor" size="24" />}
-					label={ __( 'Contact Vendor', 'mvx-blocks' ) }
-					className="mvx-block mvx-block-quick-info-vendors"
+					icon= { <MVXIcon icon="recent-product" size="24" />}
+					label={ __( 'Vendor recent Products', 'multivendorx' ) }
+					className="mvx-block mvx-block-vendor-recent-products"
 				>
 					{ __(
 						'Title',
-						'mvx-blocks'
+						'multivendorx'
 					) }
-					<div className="mvx-block__selection mvx-block-quick-info-vendors__selection">
-						<TextControl
-							placeholder={ __( 'Add some title', 'mvx-blocks' ) }
+					<div className="mvx-block__selection mvx-block-vendor-recent-products__selection">
+					<TextControl
+							placeholder={ __( 'Add some title', 'multivendorx' ) }
 							value={ block_title }
 							onChange={ ( value ) => {
 								setAttributes( { block_title: value } );
 							} }
-						/>
-						<SelectControl
-							value={ vendor_id } 
-							onChange={ ( value ) => {
-								setAttributes( { vendor_id: value } );
-							} }
-							options={ bindVendorsOptionData }
-						/>
+					/>
+					</div>
+					{ __(
+						'Select number of product',
+						'multivendorx'
+					) }
+					<div className="mvx-block__selection mvx-block-vendor-recent-products__selection">
+					<TextControl
+						placeholder={ __( 'Number of products to show', 'multivendorx' ) }
+						value={ no_of_product }
+						onChange={ ( value ) => {
+							setAttributes( { no_of_product: value } );
+						} }
+					/>
+					</div>
+					{ __(
+						'Select Vendor',
+						'multivendorx'
+					) }
+					<div className="mvx-block__selection mvx-block-vendor-recent-products__selection">
+					<SelectControl
+						value={ vendor_id } 
+						onChange={ ( value ) => {
+							setAttributes( { vendor_id: value } );
+						} }
+						options={ bindVendorsOptionData }
+					/>
 					</div>
 				</Placeholder>
 			</Fragment>

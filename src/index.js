@@ -3,8 +3,18 @@ import './components/icons/index.js';
 // load blocks
 import './blocks/TopRatedVendors/block.js';
 import './blocks/VendorTopProducts/block.js';
-import './blocks/VendorsQuickInfo/block.js';
+import './blocks/VendorsContact/block.js';
 import './blocks/VendorCoupons/block.js';
+import './blocks/VendorLocation/block.js';
+import './blocks/VendorOnSellProducts/block.js';
+import './blocks/VendorPolicies/block.js';
+
+import './blocks/VendorsReview/block.js';
+import './blocks/VendorsInfo/block.js';
+import './blocks/VendorRecentProducts/block.js';
+import './blocks/VendorProductsSearch/block.js';
+import './blocks/VendorProductCategories/block.js';
+import './blocks/VendorLists/block.js';
 
 const { updateCategory } = wp.blocks;
 const { SVG, G, Path, Polygon, Rect, Circle } = wp.components;

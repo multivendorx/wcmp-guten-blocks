@@ -90,7 +90,7 @@ class TopRatedVendors extends AbstractBlock {
 						<?php if ( $contentVisibility && isset($contentVisibility['social_link']) && $contentVisibility['social_link'] ) : ?>
 						<div class="social">
 							<div class="hover">
-								<span><?php _e( 'Join Me', 'mvx-blocks' ) ?></span>
+								<span><?php _e( 'Join Me', 'multivendorx' ) ?></span>
 								<?php
 								$vendor_fb_profile = get_user_meta( $vendor->id, '_vendor_fb_profile', true );
 								$vendor_twitter_profile = get_user_meta( $vendor->id, '_vendor_twitter_profile', true );
